@@ -1,5 +1,13 @@
 Next.jsでtodoアプリ作る
 
+<!-- apiメモ
+apiKey: "AIzaSyDVCgTuRDNhguhPr1kxxnUS92kUX-SsW8o",
+  authDomain: "next-todo-app-8ad0f.firebaseapp.com",
+  projectId: "next-todo-app-8ad0f",
+  storageBucket: "next-todo-app-8ad0f.appspot.com",
+  messagingSenderId: "973155661083",
+  appId: "1:973155661083:web:75357f763f1b5253ddcfbe" -->
+
 <!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
