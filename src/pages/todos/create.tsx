@@ -17,6 +17,7 @@ export default function Create() {
       title: createTodo,
       timestamp: serverTimestamp(),
     });
+    // 入力後フォームを空にする　
     setCreateTodo("");
   };
 
