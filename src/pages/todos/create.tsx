@@ -11,40 +11,38 @@ export default function Create() {
   // TODO追加
   const addTodo = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //　空欄だった場合保存できないようにする
+    //　入力が空だった場合処理を中断する
     if(createTodo === "") return;
     await addDoc(collection(db, 'todos'), {
       title: createTodo,
-      timestamp: serverTimestamp(),
+      // content: createTodo,
+      // status: createTodo,
+      createdAt: serverTimestamp(),
     });
-    // 入力後フォームを空にする　
+    // 入力後フォームを空にする
     setCreateTodo("");
   };
 
   return (
-    <>
-      <h1>todo create</h1>
+    <div>
+      <h1>Create Todo</h1>
         <Link href="/todos">戻る</Link>
       <form onSubmit={addTodo}>
-        <p>タイトル</p>
-          <input onChange={(e) => setCreateTodo(e.target.value)} value={createTodo} placeholder="タイトル"/>
-        {/* <p>内容</p>
-          <textarea onChange={(e) => setCreateTodo(e.target.value)} value={createTodo} placeholder="内容"/>
-        <p>ステータス</p>
-          <label>
-            <input onChange={(e) => setCreateTodo(e.target.value)} value={createTodo} type="radio" />
-            完了
-          </label>
-          <label>
-            <input onChange={(e) => setCreateTodo(e.target.value)} value={createTodo} type="radio"/>
-            途中
-          </label>
-          <label>
-            <input onChange={(e) => setCreateTodo(e.target.value)} value={createTodo} type="radio"/>
-            未完了
-          </label> */}
-        <button>作成</button>
+        <div>
+          <label htmlFor="title">タイトル</label>
+          <input
+            type="text"
+            id="title"
+            onChange={(e) => setCreateTodo(e.target.value)}
+            value={createTodo}
+            placeholder="タイトル"
+          />
+        </div>
+        <div>
+          <label htmlFor="content">内容</label>
+        </div>
+        <button type="submit">追加</button>
       </form>
-    </>
+    </div>
   )
 }
