@@ -15,13 +15,19 @@ export default function Create() {
     e.preventDefault();
     //　タイトルの入力が空だった場合処理を中断する
     if(title.trim() === "") return;
-    await addDoc(collection(db, 'todos'), {
-      title: title,
-      content: content,
-      status: status,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
+
+    try {
+      const docRef = await addDoc(collection(db, 'todos'), {
+        title: title,
+        content: content,
+        status: status,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+      console.log("Document written with ID:", docRef.id);
+    } catch(e) {
+      console.log("Error adding document:", e);
+    }
     // 入力後フォームを空にする
     setTitle("");
     setContent("");
