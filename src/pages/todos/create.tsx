@@ -17,7 +17,7 @@ export default function Create() {
       title: createTodo,
       // content: createTodo,
       // status: createTodo,
-      createdAt: serverTimestamp(),
+      // createdAt: serverTimestamp(),
     });
     // 入力後フォームを空にする
     setCreateTodo("");
@@ -38,9 +38,16 @@ export default function Create() {
             placeholder="タイトル"
           />
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="content">内容</label>
-        </div>
+          <textarea
+            // type="textarea"
+            id="content"
+            onChange={(e) => setCreateTodo(e.target.value)}
+            value={createTodo}
+            placeholder="内容"
+          />
+        </div> */}
         <button type="submit">追加</button>
       </form>
     </div>
