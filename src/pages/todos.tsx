@@ -10,7 +10,6 @@ type Todo = {
     title: string;
     content: string;
     status: string;
-    // createdAt: number;
 }
 
 export default function Todos() {
@@ -37,8 +36,6 @@ export default function Todos() {
           <p>{todo.content}</p>
           <h3>ステータス</h3>
           <p>{todo.status}</p>
-          {/* <h3>作成日</h3>
-          <p>{todo.createdAt.toData().toString()}</p> */}
           <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
           <p><Link href={`/todos/edit/${todo.id}`}>編集</Link></p>
         </div>

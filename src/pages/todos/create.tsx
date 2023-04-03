@@ -23,7 +23,6 @@ export default function Create() {
         title: todoData.title,
         content: todoData.content,
         status: todoData.status,
-        // createdAt: serverTimestamp(),
       });
       console.log("Document written with ID:", docRef.id);
     } catch(e) {
