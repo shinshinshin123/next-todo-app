@@ -1,8 +1,11 @@
+import React from "react"
+import Link from "next/link"
 
-export default function Home() {
+export default function Todos() {
   return (
     <>
-      <p>todoアプリを作る</p>
+      <h1>todoアプリ!!!</h1>
+      <Link href="/todos">Todo一覧へ</Link>
     </>
   )
 }
