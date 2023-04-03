@@ -6,21 +6,23 @@ import { useState } from "react";
 // import Header from "@/components/Header";
 
 export default function Create() {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
-  const [status, setStatus] = useState("未完了")
+  const [todoData, setTodoData] = useState({
+    title: "",
+    content: "",
+    status: "未完了",
+  });
 
   // TODO追加
   const addTodo = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //　タイトルの入力が空だった場合処理を中断する
-    if(title.trim() === "") return;
+    if(todoData.title.trim() === "") return;
 
     try {
       const docRef = await addDoc(collection(db, 'todos'), {
-        title: title,
-        content: content,
-        status: status,
+        title: todoData.title,
+        content: todoData.content,
+        status: todoData.status,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
       });
@@ -29,10 +31,20 @@ export default function Create() {
       console.log("Error adding document:", e);
     }
     // 入力後フォームを空にする
-    setTitle("");
-    setContent("");
-    setStatus("")
+    setTodoData({
+      title: "",
+      content: "",
+      status: "未完了"
+    })
   };
+
+  const handleInputChange = (e:any) => {
+    const { name, value } = e.target;
+    setTodoData({
+      ...todoData,
+      [name]: value
+    });
+  }
 
   return (
     <div>
@@ -42,25 +54,26 @@ export default function Create() {
         <div>
           <label htmlFor="title">タイトル</label>
           <input
-            type="text"
             id="title"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
+            value={todoData.title}
+            onChange={handleInputChange}
             placeholder="タイトル"
+            name="title"
           />
         </div>
         <div>
           <label htmlFor="content">内容</label>
           <textarea
             id="content"
-            onChange={(e) => setContent(e.target.value)}
-            value={content}
+            onChange={handleInputChange}
+            value={todoData.content}
             placeholder="内容"
+            name="content"
           />
         </div>
         <div>
           <label htmlFor="status">ステータス</label>
-          <select value={status} onChange={(event) => setStatus(event.target.value)}>
+          <select value={todoData.status} onChange={handleInputChange} name="status">
             <option value="未完了">未完了</option>
             <option value="途中">途中</option>
             <option value="完了">完了</option>
