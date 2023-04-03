@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "@firebase/firestore";
+import { collection, getDoc, getDocs } from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 
 //　後ほど型定義ファイルを作り分ける
@@ -10,10 +10,21 @@ type Todo = {
     title: string;
     content: string;
     status: string;
-    createdAt: string;
+    // createdAt: number;
 }
 
-export default function Todos({todos}:{todos:Todo[]}) {
+export default function Todos() {
+  const [todos, setTodos] = useState([])
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+        const querySnapshot = await getDocs(collection(db, "todos"));
+        const todosData = querySnapshot.docs.map((doc) => (doc.data()));
+        setTodos(todosData);
+    };
+    fetchTodos();
+  }, []);
+
   return (
     <div>
       <h1>TODO一覧ページ</h1>
@@ -26,8 +37,8 @@ export default function Todos({todos}:{todos:Todo[]}) {
           <p>{todo.content}</p>
           <h3>ステータス</h3>
           <p>{todo.status}</p>
-          <h3>作成日</h3>
-          <p>{todo.createdAt}</p>
+          {/* <h3>作成日</h3>
+          <p>{todo.createdAt.toData().toString()}</p> */}
           <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
           <p><Link href={`/todos/edit/${todo.id}`}>編集</Link></p>
         </div>
