@@ -14,6 +14,7 @@ type Todo = {
 
 export default function Todos() {
   const [todos, setTodos] = useState([])
+  const [filter, setFilter] = useState<Filter>("all")
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -24,11 +25,32 @@ export default function Todos() {
     fetchTodos();
   }, []);
 
+  type Filter = "completed" | "inProgress" | "inComplete";
+
+  const filteredTodos = todos.filter((todo) => {
+    switch (filter) {
+      case "completed":
+        return todo.status === "完了";
+      case "inProgress":
+        return todo.status === "途中";
+      case "inComplete":
+        return todo.status === "未完了";
+      default:
+        return true;
+    }
+  });
+
   return (
     <div>
       <h1>TODO一覧ページ</h1>
       <Link href="/todos/create">TODO作成</Link>
-      {todos.map((todo:Todo) => (
+      <div>
+        <button onClick={() => setFilter("completed")}>完了</button>
+        <button onClick={() => setFilter("inProgress")}>途中</button>
+        <button onClick={() => setFilter("inComplete")}>未完了</button>
+        <button onClick={() => setFilter("all")}>全て</button>
+      </div>
+      {filteredTodos.map((todo:Todo) => (
         <div key={todo.id}>
           <h3>タイトル</h3>
           <p>{todo.title}</p>
@@ -37,7 +59,6 @@ export default function Todos() {
           <h3>ステータス</h3>
           <p>{todo.status}</p>
           <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
-          <p><Link href={`/todos/edit/${todo.id}`}>編集</Link></p>
         </div>
       ))}
     </div>
