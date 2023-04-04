@@ -25,7 +25,7 @@ export default function Todos() {
     fetchTodos();
   }, []);
 
-  type Filter = "completed" | "inProgress" | "inComplete";
+  type Filter = "all" |"completed" | "inProgress" | "inComplete";
 
   const filteredTodos = todos.filter((todo) => {
     switch (filter) {
@@ -35,6 +35,8 @@ export default function Todos() {
         return todo.status === "途中";
       case "inComplete":
         return todo.status === "未完了";
+      case "all":
+        return true;
       default:
         return true;
     }
