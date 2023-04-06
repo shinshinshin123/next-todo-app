@@ -13,22 +13,35 @@ type Todo = {
   createdAt: string
 }
 
+// フィルターの型定義
 type Filter = "all" |"completed" | "inProgress" | "inComplete";
 
 export default function Todos() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<Filter>("all");
   const [sort, setSort] = useState("asc");
+
+  // todoのインターフェイス
+  interface Todo {
+    id: string;
+    title: string;
+    content: string;
+    status: string;
+    createdAt: Date;
+  }
 
   useEffect(() => {
     const fetchTodos = async () => {
       const querySnapshot = await getDocs(collection(db, "todos"));
       const todosData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
+        title: doc.data().title,
+        content: doc.data().content,
+        status: doc.data().status,
         createdAt: doc.data().createdAt.toDate()
       }));
-      setTodos(todosData);
+      const todos = todosData as Todo[]
+      setTodos(todos);
     };
     fetchTodos();
   }, []);
@@ -51,10 +64,13 @@ export default function Todos() {
 
   // ソート
   const sortedTodos = filteredTodos.sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+
     if (sort === "asc") {
-      return a.createdAt.getTime() - b.createdAt.getTime();
+      return dateA.getTime() - dateB.getTime();
     } else {
-      return b.createdAt.getTime() - a.createdAt.getTime();
+      return dateB.getTime() - dateA.getTime();
     }
   });
 
