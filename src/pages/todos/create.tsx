@@ -23,8 +23,7 @@ export default function Create() {
         title: todoData.title,
         content: todoData.content,
         status: todoData.status,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
+        createdAt: serverTimestamp()
       });
       console.log("Document written with ID:", docRef.id);
     } catch(e) {
@@ -34,7 +33,7 @@ export default function Create() {
     setTodoData({
       title: "",
       content: "",
-      status: "未完了"
+      status: "未完了",
     })
   };
 
