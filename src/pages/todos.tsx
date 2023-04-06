@@ -16,8 +16,9 @@ type Todo = {
 type Filter = "all" |"completed" | "inProgress" | "inComplete";
 
 export default function Todos() {
-  const [todos, setTodos] = useState([])
-  const [filter, setFilter] = useState<Filter>("all")
+  const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState<Filter>("all");
+  const [sort, setSort] = useState("asc");
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -48,6 +49,15 @@ export default function Todos() {
     }
   });
 
+  // ソート
+  const sortedTodos = filteredTodos.sort((a, b) => {
+    if (sort === "asc") {
+      return a.createdAt.getTime() - b.createdAt.getTime();
+    } else {
+      return b.createdAt.getTime() - a.createdAt.getTime();
+    }
+  });
+
   return (
     <div>
       <h1>TODO一覧ページ</h1>
@@ -58,7 +68,11 @@ export default function Todos() {
         <button onClick={() => setFilter("inComplete")}>未完了</button>
         <button onClick={() => setFilter("all")}>全て</button>
       </div>
-      {filteredTodos.map((todo:Todo) => (
+      <div>
+        <button onClick={() => setSort("asc")}>日付（昇順）</button>
+        <button onClick={() => setSort("desc")}>日付（降順）</button>
+      </div>
+      {sortedTodos.map((todo:Todo) => (
         <div key={todo.id}>
           <h3>タイトル</h3>
           <p>{todo.title}</p>
