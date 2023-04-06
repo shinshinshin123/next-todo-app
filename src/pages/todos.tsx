@@ -1,16 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { collection, getDoc, getDocs } from "@firebase/firestore";
+import { collection, getDoc, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 
 //　後ほど型定義ファイルを作り分ける
 type Todo = {
-    id: number;
-    title: string;
-    content: string;
-    status: string;
+  id: number;
+  title: string;
+  content: string;
+  status: string;
+  createdAt: string
 }
+
+type Filter = "all" |"completed" | "inProgress" | "inComplete";
 
 export default function Todos() {
   const [todos, setTodos] = useState([])
@@ -18,15 +21,18 @@ export default function Todos() {
 
   useEffect(() => {
     const fetchTodos = async () => {
-        const querySnapshot = await getDocs(collection(db, "todos"));
-        const todosData = querySnapshot.docs.map((doc) => (doc.data()));
-        setTodos(todosData);
+      const querySnapshot = await getDocs(collection(db, "todos"));
+      const todosData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt.toDate()
+      }));
+      setTodos(todosData);
     };
     fetchTodos();
   }, []);
 
-  type Filter = "all" |"completed" | "inProgress" | "inComplete";
-
+  //　ステータスフィルター
   const filteredTodos = todos.filter((todo) => {
     switch (filter) {
       case "completed":
@@ -60,6 +66,8 @@ export default function Todos() {
           <p>{todo.content}</p>
           <h3>ステータス</h3>
           <p>{todo.status}</p>
+          <h3>作成日時</h3>
+          <p>{todo.createdAt.toString()}</p>
           <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
         </div>
       ))}
