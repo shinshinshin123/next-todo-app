@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { collection, getDoc, getDocs} from "@firebase/firestore";
+import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 
 //　後ほど型定義ファイルを作り分ける
