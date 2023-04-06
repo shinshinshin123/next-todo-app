@@ -67,7 +67,7 @@ export default function Todos() {
           <h3>ステータス</h3>
           <p>{todo.status}</p>
           <h3>作成日時</h3>
-          <p>{todo.createdAt.toString()}</p>
+          <p>{todo.createdAt.toString().slice(0, -16)}</p>
           <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
         </div>
       ))}
