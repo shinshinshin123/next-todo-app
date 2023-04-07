@@ -3,7 +3,6 @@ import Link from "next/link";
 import { db } from "src/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "@firebase/firestore";
 import { useState } from "react";
-// import Header from "@/components/Header";
 
 export default function Create() {
   const [todoData, setTodoData] = useState({
@@ -48,7 +47,7 @@ export default function Create() {
   return (
     <div>
       <h1>Create Todo</h1>
-        <Link href="/todos">戻る</Link>
+      <Link href="/todos">戻る</Link>
       <form onSubmit={addTodo}>
         <div>
           <label htmlFor="title">タイトル</label>
