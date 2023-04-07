@@ -2,9 +2,33 @@ import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { doc, getFirestore } from "firebase/firestore";
+import { getFirestore, collection, doc, getDoc, CollectionReference, DocumentData } from "firebase/firestore";
 
 export default function Show() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [todo, setTodo] = useState();
+
+  useEffect(() => {
+    const fetchTodo = async () => {
+      const db = getFirestore();
+      //コレクションの参照を取得
+      const todosRef = collection(db, "todods");
+      //Todoのドキュメントの参照を取得
+      const todoDoc = doc(todosRef, id);
+      //ドキュメントのデータを取得
+      const todoData = await getDoc(todoDoc);
+      setTodo(todoData.data());
+    };
+
+    if (id) {
+      fetchTodo();
+    }
+  }, [id])
+
+  if (!todo) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div>
