@@ -2,13 +2,13 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
-import { getFirestore, doc, updateDoc} from "@firebase/firestore";
+import { doc, updateDoc} from "firebase/firestore";
 import { db } from "src/lib/firebase";
 
 export default function Edit() {
   const router = useRouter();
   const { id } = router.query;
-  const firebase = getFirestore();
+  // const firebase = getFirestore();
   const [todo, setTodo] = useState({
     title: "",
     content: "",
@@ -17,17 +17,15 @@ export default function Edit() {
 
   useEffect(() => {
     if (id) {
-      const todoRef = doc(firestore, "todos", id.toString());
-      todoRef
-        .get()
-        .then((docSnapshot :any) => {
+      const todoRef = doc(db, "todos", id.toString());
+      const unsubscribe = todoRef.onSnapshot((docSnapshot: any) => {
           if (docSnapshot.exists()) {
             setTodo(docSnapshot.data());
           }
-        })
-        .catch((error: any) => {
+          }, (error :any) => {
           console.error(error)
         });
+        return () => unsubscribe();
     }
   }, [id])
 
