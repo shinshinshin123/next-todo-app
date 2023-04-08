@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import { getFirestore, collection, doc, getDoc, CollectionReference, DocumentData } from "firebase/firestore";
 
 export default function Show() {
-  // const router = useRouter();
-  // const { id } = router.query;
-  // const [todo, setTodo] = useState();
+  const router = useRouter();
+  const { id } = router.query;
+  const [todo, setTodo] = useState();
 
   // useEffect(() => {
   //   const fetchTodo = async () => {
@@ -26,9 +26,9 @@ export default function Show() {
   //   }
   // }, [id])
 
-  // if (!todo) {
-  //   return <div>Loading...</div>
-  // }
+  if (!todo) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div>

@@ -28,6 +28,7 @@ export default function Create() {
     } catch(e) {
       console.log("Error adding document:", e);
     }
+
     // 入力後フォームを空にする
     setTodoData({
       title: "",
