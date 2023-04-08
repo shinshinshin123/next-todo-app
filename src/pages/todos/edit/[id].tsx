@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
-import { collection, addDoc, serverTimestamp, getFirestore } from "@firebase/firestore";
-
+import { getFirestore, doc, updateDoc} from "@firebase/firestore";
+import { db } from "src/lib/firebase";
 
 export default function Edit() {
   const router = useRouter();
@@ -14,6 +14,58 @@ export default function Edit() {
     content: "",
     status: ""
   })
+
+  useEffect(() => {
+    if (id) {
+      const todoRef = doc(firestore, "todos", id.toString());
+      todoRef
+        .get()
+        .then((docSnapshot :any) => {
+          if (docSnapshot.exists()) {
+            setTodo(docSnapshot.data());
+          }
+        })
+        .catch((error: any) => {
+          console.error(error)
+        });
+    }
+  }, [id])
+
+  const editSubmit = async (e: any) => {
+    e.preventDefault();
+    const todoRef = doc(db, "todos", id.toString());
+    try {
+      await updateDoc(todoRef, {
+        title: todo.title,
+        content: todo.content,
+        status: todo.status,
+      });
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleTitleChange = (e :any) => {
+    setTodo({
+      ...todo,
+      title: e.target.value,
+    });
+  };
+
+  const handleContentChange = (e :any) => {
+    setTodo({
+      ...todo,
+      content: e.target.value,
+    });
+  };
+
+  const handleStatusChange = (e :any) => {
+    setTodo({
+      ...todo,
+      status: e.target.value,
+    });
+  };
 
   // 該当するtodoの情報を取得するまでの間にloading出す。
   if (!todo) {
