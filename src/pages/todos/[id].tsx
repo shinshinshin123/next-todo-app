@@ -11,11 +11,20 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "src/lib/firebase";
+import { uuidv4 } from "@firebase/util";
+
+//　型定義(後ほど別ファイルに移行する)
+type Comment = {
+  id: string;
+  name: string;
+  content: string;
+  todoId: string;
+}
 
 export default function Show() {
   const router = useRouter();
   const { id } = router.query;
-  const [todo, setTodo] = useState<DocumentData | null>(null);
+  const [todo, setTodo] = useState<DocumentData & { comments?: Comment[]}| null>(null);
   const [comment, setComment] = useState({
     name: "",
     content: "",
@@ -25,16 +34,20 @@ export default function Show() {
   const handleCommentSubmit = async (e: any) => {
     e.preventDefault();
     const commentData = {
+      id: uuidv4(),
+      todoId: id,
       name: comment.name,
       content: comment.content,
-      createdAt: new Date(),
-      todoId: id,
     };
     try {
       await addDoc(collection(db, "comments"), commentData);
       setComment({
         name: "",
         content: "",
+      });
+      setTodo({
+        ...todo,
+        comments: [...(todo?.comment || []), commentData],
       })
     } catch(error) {
       console.error(error)
@@ -114,3 +127,7 @@ export default function Show() {
     </div>
   )
 }
+function uuid4() {
+  throw new Error("Function not implemented.");
+}
+
