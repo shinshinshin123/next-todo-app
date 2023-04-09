@@ -5,12 +5,13 @@ import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 
 //　後ほど型定義ファイルを作り分ける
-type Todo = {
-  id: number;
+// todoのインターフェイス
+interface Todo {
+  id: string;
   title: string;
   content: string;
   status: string;
-  createdAt: string
+  createdAt: Date;
 }
 
 // フィルターの型定義
@@ -20,15 +21,6 @@ export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<Filter>("all");
   const [sort, setSort] = useState("asc");
-
-  // todoのインターフェイス
-  interface Todo {
-    id: string;
-    title: string;
-    content: string;
-    status: string;
-    createdAt: Date;
-  }
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -97,7 +89,7 @@ export default function Todos() {
           <h3>ステータス</h3>
           <p>{todo.status}</p>
           <h3>作成日時</h3>
-          <p>{todo.createdAt.toString().slice(0, -16)}</p>
+          <p>{todo.createdAt.toLocaleString()}</p>
           <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
         </div>
       ))}
