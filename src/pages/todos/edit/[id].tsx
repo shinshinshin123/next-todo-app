@@ -2,13 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
-import { doc, updateDoc} from "firebase/firestore";
+import { doc, getDoc, updateDoc} from "firebase/firestore";
 import { db } from "src/lib/firebase";
 
 export default function Edit() {
   const router = useRouter();
   const { id } = router.query;
-  // const firebase = getFirestore();
   const [todo, setTodo] = useState({
     title: "",
     content: "",
@@ -16,18 +15,22 @@ export default function Edit() {
   })
 
   useEffect(() => {
+    const fetchTodo = async () => {
     if (id) {
       const todoRef = doc(db, "todos", id.toString());
-      const unsubscribe = todoRef.onSnapshot((docSnapshot: any) => {
-          if (docSnapshot.exists()) {
-            setTodo(docSnapshot.data());
-          }
-          }, (error :any) => {
-          console.error(error)
-        });
-        return () => unsubscribe();
-    }
-  }, [id])
+      const docSnapshot = await getDoc(todoRef);
+        if (docSnapshot.exists()) {
+          const todoData = docSnapshot.data();
+          setTodo({
+            title: todoData.title,
+            content: todoData.content,
+            status: todoData.status
+          })
+        }
+      }
+    };
+    fetchTodo();
+  }, [id]);
 
   const editSubmit = async (e: any) => {
     e.preventDefault();
@@ -38,7 +41,7 @@ export default function Edit() {
         content: todo.content,
         status: todo.status,
       });
-      router.push("/");
+      router.push("/todos");
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +90,7 @@ export default function Edit() {
         </div>
         <div>
           <label htmlFor="content">内容</label>
-          <input
+          <textarea
             id="content"
             value={todo.content}
             onChange={handleContentChange}
@@ -101,8 +104,8 @@ export default function Edit() {
             <option value="完了">完了</option>
           </select>
         </div>
+        <button type="submit">保存</button>
       </form>
-      <button type="submit">保存</button>
     </div>
   )
 }
