@@ -3,23 +3,23 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
-  addDoc,
-  collection,
+  // addDoc,
+  // collection,
   deleteDoc,
   doc,
   DocumentData,
   getDoc,
 } from "firebase/firestore";
 import { db } from "src/lib/firebase";
-import { uuidv4 } from "@firebase/util";
+// import { uuidv4 } from "@firebase/util";
 
 //　型定義(後ほど別ファイルに移行する)
-type Comment = {
-  id: string;
-  name: string;
-  content: string;
-  todoId: string;
-}
+// type Comment = {
+//   id: string;
+//   name: string;
+//   content: string;
+//   todoId: string;
+// }
 
 export default function Show() {
   const router = useRouter();
@@ -30,29 +30,29 @@ export default function Show() {
     content: "",
   });
 
-  // コメント投稿機能
-  const handleCommentSubmit = async (e: any) => {
-    e.preventDefault();
-    const commentData = {
-      id: uuidv4(),
-      todoId: id,
-      name: comment.name,
-      content: comment.content,
-    };
-    try {
-      await addDoc(collection(db, "comments"), commentData);
-      setComment({
-        name: "",
-        content: "",
-      });
-      setTodo({
-        ...todo,
-        comments: [...(todo?.comment || []), commentData],
-      })
-    } catch(error) {
-      console.error(error)
-    }
-  };
+  // // コメント投稿機能
+  // const handleCommentSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   const commentData = {
+  //     id: uuidv4(),
+  //     todoId: id,
+  //     name: comment.name,
+  //     content: comment.content,
+  //   };
+  //   try {
+  //     await addDoc(collection(db, "comments"), commentData);
+  //     setComment({
+  //       name: "",
+  //       content: "",
+  //     });
+  //     setTodo({
+  //       ...todo,
+  //       comments: [...(todo?.comment || []), commentData],
+  //     })
+  //   } catch(error) {
+  //     console.error(error)
+  //   }
+  // };
 
   //個別のtodo(id)をfirestoreのdbから持ってくる
   useEffect(() => {
@@ -94,7 +94,7 @@ export default function Show() {
       <p>{todo.status}</p>
       <h2>作成日時</h2>
       <p>{todo.createdAt.toDate().toLocaleString()}</p>
-      <h2>コメント</h2>
+      {/* <h2>コメント</h2>
       <div>
         <ul>
           {todo.comments && todo.comments.map((comment :any) => (
@@ -105,8 +105,8 @@ export default function Show() {
             </li>
           ))}
         </ul>
-      </div>
-      <form onSubmit={handleCommentSubmit}>
+      </div> */}
+      {/* <form onSubmit={handleCommentSubmit}>
       <div>
           <label htmlFor="name">名前</label>
           <input
@@ -123,7 +123,7 @@ export default function Show() {
           />
         </div>
         <button type="submit">コメントを投稿する</button>
-      </form>
+      </form> */}
     </div>
   )
 }
