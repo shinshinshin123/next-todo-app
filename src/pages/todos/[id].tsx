@@ -2,13 +2,44 @@ import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { deleteDoc, doc, DocumentData, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "src/lib/firebase";
 
 export default function Show() {
   const router = useRouter();
   const { id } = router.query;
   const [todo, setTodo] = useState<DocumentData | null>(null);
+  const [comment, setComment] = useState({
+    name: "",
+    content: "",
+  });
+
+  // コメント投稿機能
+  const handleCommentSubmit = async (e: any) => {
+    e.preventDefault();
+    const commentData = {
+      name: comment.name,
+      content: comment.content,
+      createdAt: new Date(),
+      todoId: id,
+    };
+    try {
+      await addDoc(collection(db, "comments"), commentData);
+      setComment({
+        name: "",
+        content: "",
+      })
+    } catch(error) {
+      console.error(error)
+    }
+  };
 
   //個別のtodo(id)をfirestoreのdbから持ってくる
   useEffect(() => {
@@ -66,16 +97,16 @@ export default function Show() {
       <div>
           <label htmlFor="name">名前</label>
           <input
-            value={commentName}
-            onChange={(e) => setName(e.target.value)}
+            value={comment.name}
+            onChange={(e) => setComment({ ...comment, name: e.target.value})}
             placeholder="名前"
           />
         </div>
         <div>
           <label htmlFor="content">コメント</label>
           <textarea
-            value={commentContent}
-            onChange={(e) => setComment(e.target.value)}
+            value={comment.content}
+            onChange={(e) => setComment({ ...comment, content: e.target.value})}
           />
         </div>
         <button type="submit">コメントを投稿する</button>
