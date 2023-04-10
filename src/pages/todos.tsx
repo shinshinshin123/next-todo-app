@@ -91,6 +91,8 @@ export default function Todos() {
           <h3>作成日時</h3>
           <p>{todo.createdAt.toLocaleString()}</p>
           <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
+          {/* 仮の編集リンク */}
+          <p><Link href={`/todos/edit/${todo.id}`}>編集</Link></p>
         </div>
       ))}
     </div>
