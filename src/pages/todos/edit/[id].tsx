@@ -34,7 +34,7 @@ export default function Edit() {
 
   const editSubmit = async (e: any) => {
     e.preventDefault();
-    const todoRef = doc(db, "todos", id.toString());
+    const todoRef = doc(db, "todos", id!.toString());
     try {
       await updateDoc(todoRef, {
         title: todo.title,
