@@ -5,6 +5,34 @@ import { useRouter } from "next/router";
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Signin () {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  })
+  const [isLaoding, setIsLoading] = useState(false);
+  // const router = useRouter();
+
+  const handleEmailChange = (e:any) => {
+    setLoginInfo(e.target.value);
+  };
+
+  const handlePasswordChange = (e:any) => {
+    setLoginInfo(e.target.value);
+  };
+
+  const handleFormSubmit = async(e:any) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setIsLoading(false);
+  }
+
   return (
     <div>
       <h1>ログイン</h1>
