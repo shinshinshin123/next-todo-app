@@ -5,6 +5,13 @@ import { useRouter } from "react";
 import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/firebase';
 
 export default function Signin () {
+  const [fromData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
 
   return (
     <div>
