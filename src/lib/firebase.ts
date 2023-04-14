@@ -21,3 +21,6 @@ const app = initializeApp(firebaseConfig);
 
 // db情報をエクスポートする
 export const db = getFirestore(app);
+
+// auth情報をエクスポートする
+// export const auth = firebase.auth();

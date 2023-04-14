@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { useState } from "react";
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from "react";
+import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/firebase';
 
 export default function Signin () {
 
@@ -31,10 +32,12 @@ export default function Signin () {
         <div>
         </div>
         <button type="submit" disabled={isLaoding}>
-          ログイン
+          {/* ログインする */}
+          {isLoding ? 'ロード中...' : 'ログイン'}
         </button>
-        <button type="button" onClick={() => signIn('google')}>
-          Googleアカウントでログイン
+        <button type="button" onClick={handleGoogleLogin} disabled={isLoading}>
+          {/* Googleアカウントでログイン */}
+          {isLoding ? 'ロード中...' : 'Googleアカウントでログイン'}
         </button>
       </form>
     </div>
