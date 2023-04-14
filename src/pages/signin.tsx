@@ -10,23 +10,29 @@ export default function Signin () {
     <div>
       <h1>ログイン</h1>
       <Link href="/todos">戻る</Link>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleLogin}>
         <div>
           <label htmlFor="email">Eメール</label>
           <input
+            type="email"
             id="email"
-            value={email}
-            onChange={handleEmailChange}
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
             placeholder="Eメール"
+            required
           />
         </div>
         <div>
           <label htmlFor="password">パスワード</label>
           <input
+            type="password"
+            name="password"
             id="email"
-            value={passsword}
-            onChange={handlePasswordChange}
+            value={formData.passsword}
+            onChange={handleInputChange}
             placeholder="パスワード"
+            required
           />
         </div>
         <div>
