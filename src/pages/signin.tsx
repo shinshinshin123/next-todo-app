@@ -5,13 +5,36 @@ import { useRouter } from "react";
 import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/firebase';
 
 export default function Signin () {
-  const [fromData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const handleInputChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  }
+
+  //　通常のログイン
+  const handleLogin = async (e:any) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(formData.email, formData.password);
+      router.push('/index');
+    } catch(error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  
 
   return (
     <div>
@@ -36,7 +59,7 @@ export default function Signin () {
             type="password"
             name="password"
             id="email"
-            value={formData.passsword}
+            value={formData.password}
             onChange={handleInputChange}
             placeholder="パスワード"
             required
@@ -44,13 +67,13 @@ export default function Signin () {
         </div>
         <div>
         </div>
-        <button type="submit" disabled={isLaoding}>
+        <button type="submit" disabled={isLoading}>
           {/* ログインする */}
-          {isLoding ? 'ロード中...' : 'ログイン'}
+          {isLoading ? 'ロード中...' : 'ログイン'}
         </button>
         <button type="button" onClick={handleGoogleLogin} disabled={isLoading}>
           {/* Googleアカウントでログイン */}
-          {isLoding ? 'ロード中...' : 'Googleアカウントでログイン'}
+          {isLoading ? 'ロード中...' : 'Googleアカウントでログイン'}
         </button>
       </form>
     </div>
