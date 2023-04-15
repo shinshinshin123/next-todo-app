@@ -9,15 +9,15 @@ export default function Signup () {
   return (
     <div>
       <h1>新規登録</h1>
-      {error && <div>{error}</div>}
-      <form onSubmit={handleNerSubmit}>
+      <form onSubmit={handleSignup}>
          <div>
           <label htmlFor="email">Eメール</label>
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={fromData.email}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -26,8 +26,9 @@ export default function Signup () {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -36,16 +37,21 @@ export default function Signup () {
           <input
             type="text"
             id="userName"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={fromData.userName}
+            onChange={handleInputChange}
             required
           />
         </div>
-        <button type="submit">新規登録</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'ローディング中...' : '新規登録'}
+        </button>
+        <p>
+          すでにアカウントを持っていますか？{' '}
+          <Link href="/signin">
+            ログインする
+          </Link>
+        </p>
       </form>
-      <p>
-        すでにアカウントを持っていますか？ <Link href="/signin">ログイン</Link>
-      </p>
     </div>
   )
 }
