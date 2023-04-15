@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { signInWithEmailAndPassword, signInWithGoogle } from "src/lib/firebase";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, auth } from "src/lib/firebase";
 
 export default function Signin () {
   const [formData, setFormData] = useState({
@@ -25,8 +25,8 @@ export default function Signin () {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(formData.email, formData.password);
-      router.push('/index');
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      router.push('/');
     } catch(error) {
       console.error(error);
     } finally {
@@ -37,9 +37,10 @@ export default function Signin () {
   // Googleアカウントでログインする
   const handleGoogleLogin = async () => {
     setIsLoading(true);
+    const provider = new GoogleAuthProvider();
     try {
-      await signInWithGoogle();
-      router.push('/index');
+      await signInWithPopup(auth, provider);
+      router.push('/');
     } catch(error) {
       console.error(error);
     } finally {
