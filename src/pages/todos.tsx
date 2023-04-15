@@ -69,7 +69,12 @@ export default function Todos() {
   return (
     <div>
       <h1>TODO一覧ページ</h1>
-      <Link href="/todos/create">TODO作成</Link>
+      <div>
+        <Link href="index">戻る</Link>
+      </div>
+      <div>
+        <Link href="/todos/create">TODO作成</Link>
+      </div>
       <div>
         <button onClick={() => setFilter("completed")}>完了</button>
         <button onClick={() => setFilter("inProgress")}>途中</button>

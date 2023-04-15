@@ -6,6 +6,7 @@ export default function Todos() {
     <div>
       <h1>todoアプリ!!!</h1>
       <Link href="/todos">Todo一覧へ</Link>
+      <Link href="/signin">ログイン</Link>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "react";
+import { useRouter } from 'next/router';
 import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/firebase';
 
 export default function Signin () {
@@ -34,7 +34,19 @@ export default function Signin () {
     }
   };
 
-  
+  // Googleアカウントでログインする
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithGoogle();
+      router.push('/index');
+    } catch(error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   return (
     <div>
@@ -67,14 +79,18 @@ export default function Signin () {
         </div>
         <div>
         </div>
-        <button type="submit" disabled={isLoading}>
-          {/* ログインする */}
-          {isLoading ? 'ロード中...' : 'ログイン'}
-        </button>
-        <button type="button" onClick={handleGoogleLogin} disabled={isLoading}>
-          {/* Googleアカウントでログイン */}
-          {isLoading ? 'ロード中...' : 'Googleアカウントでログイン'}
-        </button>
+        <div>
+          <button type="submit" disabled={isLoading}>
+            {/* ログインする */}
+            {isLoading ? 'ロード中...' : 'ログイン'}
+          </button>
+        </div>
+        <div>
+          <button type="button" onClick={handleGoogleLogin} disabled={isLoading}>
+            {/* Googleアカウントでログイン */}
+            {isLoading ? 'ロード中...' : 'Googleアカウントでログイン'}
+          </button>
+        </div>
       </form>
     </div>
   )
