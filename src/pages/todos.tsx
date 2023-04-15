@@ -70,7 +70,7 @@ export default function Todos() {
     <div>
       <h1>TODO一覧ページ</h1>
       <div>
-        <Link href="index">戻る</Link>
+        <Link href="/">戻る</Link>
       </div>
       <div>
         <Link href="/todos/create">TODO作成</Link>

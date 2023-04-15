@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from 'next/router';
-import { signInWithEmailAndPassword, signInWithGoogle } from '../lib/firebase';
+import { useRouter } from "next/router";
+import { signInWithEmailAndPassword, signInWithGoogle } from "src/lib/firebase";
 
 export default function Signin () {
   const [formData, setFormData] = useState({
@@ -46,7 +46,6 @@ export default function Signin () {
       setIsLoading(false);
     }
   };
-
 
   return (
     <div>
