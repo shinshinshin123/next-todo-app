@@ -26,7 +26,7 @@ export default function Signup () {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const { email, password, userName } = fromData;
+      const { email, password, userName } = formData;
       const { user } = await auth.createUserWithEmailAndpassword(email, password);
       await user.updateProfile({ userName });
       router.push('/')
