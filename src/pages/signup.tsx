@@ -6,17 +6,48 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 
 export default function Signup () {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    userName: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleInputChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSignup = async (e:any) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const { email, password, userName } = fromData;
+      const { user } = await auth.createUserWithEmailAndpassword(email, password);
+      await user.updateProfile({ userName });
+      router.push('/')
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div>
       <h1>新規登録</h1>
       <form onSubmit={handleSignup}>
-         <div>
+        <div>
           <label htmlFor="email">Eメール</label>
           <input
             type="email"
             id="email"
             name="email"
-            value={fromData.email}
+            value={formData.email}
             onChange={handleInputChange}
             required
           />
@@ -37,7 +68,7 @@ export default function Signup () {
           <input
             type="text"
             id="userName"
-            value={fromData.userName}
+            value={formData.userName}
             onChange={handleInputChange}
             required
           />
@@ -48,7 +79,7 @@ export default function Signup () {
         <p>
           すでにアカウントを持っていますか？{' '}
           <Link href="/signin">
-            ログインする
+            ログインはこちら
           </Link>
         </p>
       </form>
