@@ -2,8 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from 'src/lib/firebase';
 
 export default function Signup () {
   const [formData, setFormData] = useState({
@@ -27,7 +26,7 @@ export default function Signup () {
     setIsLoading(true);
     try {
       const { email, password, userName } = formData;
-      const { user } = await auth.createUserWithEmailAndpassword(email, password);
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
       await user.updateProfile({ userName });
       router.push('/')
     } catch (error) {
