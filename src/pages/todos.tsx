@@ -10,7 +10,7 @@ interface Todo {
   id: string;
   title: string;
   content: string;
-  status: string;
+  status: "未完了" | "途中" | "完了";
   createdAt: Date;
 }
 
