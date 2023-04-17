@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { auth } from 'src/lib/firebase';
+import { auth } from '../lib/firebase';
 
 export default function Signup () {
   const [formData, setFormData] = useState({
@@ -67,6 +67,7 @@ export default function Signup () {
           <input
             type="text"
             id="userName"
+            name="userName"
             value={formData.userName}
             onChange={handleInputChange}
             required
