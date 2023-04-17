@@ -3,19 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
-
-//　後ほど型定義ファイルを作り分ける
-// todoのインターフェイス
-interface Todo {
-  id: string;
-  title: string;
-  content: string;
-  status: "未完了" | "途中" | "完了";
-  createdAt: Date;
-}
-
-// フィルターの型定義
-type Filter = "all" |"completed" | "inProgress" | "inComplete";
+import { Todo, Filter } from "src/types/todo";
 
 export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
