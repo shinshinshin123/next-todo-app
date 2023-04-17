@@ -5,6 +5,7 @@ import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 import { Todo, Filter } from "src/types/todo";
 import StatusFilter from "../components/StatusFilter";
+import Sort from "../components/Sort";
 
 export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -68,9 +69,9 @@ export default function Todos() {
       <div>
         <StatusFilter filter={filter} setFilter={setFilter}/>
       </div>
+      {/* ソート */}
       <div>
-        <button onClick={() => setSort("asc")}>日付（昇順）</button>
-        <button onClick={() => setSort("desc")}>日付（降順）</button>
+        <Sort sort={sort} setSort={setSort}/>
       </div>
       {sortedTodos.map((todo:Todo) => (
         <div key={todo.id}>
