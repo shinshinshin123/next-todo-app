@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 import { Todo, Filter } from "src/types/todo";
+import StatusFilter from "../components/StatusFilter";
 
 export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -63,11 +64,9 @@ export default function Todos() {
       <div>
         <Link href="/todos/create">TODO作成</Link>
       </div>
+      {/* ステータスフィルター */}
       <div>
-        <button onClick={() => setFilter("completed")}>完了</button>
-        <button onClick={() => setFilter("inProgress")}>途中</button>
-        <button onClick={() => setFilter("inComplete")}>未完了</button>
-        <button onClick={() => setFilter("all")}>全て</button>
+        <StatusFilter filter={filter} setFilter={setFilter}/>
       </div>
       <div>
         <button onClick={() => setSort("asc")}>日付（昇順）</button>

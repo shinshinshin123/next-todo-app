@@ -1,10 +1,10 @@
 // todoの型定義
 export interface Todo {
-    id: string;
-    title: string;
-    content: string;
-    status: "未完了" | "途中" | "完了";
-    createdAt: Date;
+  id: string;
+  title: string;
+  content: string;
+  status: "未完了" | "途中" | "完了";
+  createdAt: Date;
 }
 
 // フィルターの型定義
