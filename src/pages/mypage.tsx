@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 export default function Mypage () {
   return (
     <div>
-      
     </div>
   )
 }
