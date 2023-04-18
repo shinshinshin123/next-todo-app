@@ -11,7 +11,7 @@ export interface Todo {
 export type Filter = "all" |"completed" | "inProgress" | "inComplete";
 
 // todolistの型定義
-export interface TodoList {
+interface TodoList {
   id: string;
   title: string;
   content: string;
@@ -22,3 +22,14 @@ export interface TodoList {
 export interface TodoItemProps {
   todo: TodoList;
 }
+
+// todoの作成
+export type CreateFormProps = {
+  todoData: {
+    title: string;
+    content: string;
+    status: string;
+  };
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement >) => void;
+  addTodo: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+};
