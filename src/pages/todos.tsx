@@ -71,9 +71,9 @@ export default function Todos() {
         <StatusFilter filter={filter} setFilter={setFilter}/>
       </div>
       {/* ソート */}
-      <div>
+      {/* <div>
         <TodoSort sort={sort} setSort={setSort}/>
-      </div>
+      </div> */}
       {/* Todoの一覧 */}
       {sortedTodos.map((todo:Todo) => (
         <TodoItem key={todo.id} todo={todo}/>

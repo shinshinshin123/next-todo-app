@@ -24,16 +24,16 @@ export default function Signup () {
   const handleSignup = async (e:any) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      const { email, password, userName } = formData;
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-      await user.updateProfile({ userName });
-      router.push('/')
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+    // try {
+    //   const { email, password, userName } = formData;
+    //   const { user } = await auth.createUserWithEmailAndPassword(email, password);
+    //   await user.updateProfile({ userName });
+    //   router.push('/')
+    // } catch (error) {
+    //   console.error(error);
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   return (
