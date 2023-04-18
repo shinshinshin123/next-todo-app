@@ -9,3 +9,16 @@ export interface Todo {
 
 // フィルターの型定義
 export type Filter = "all" |"completed" | "inProgress" | "inComplete";
+
+// todolistの型定義
+export interface TodoList {
+  id: string;
+  title: string;
+  content: string;
+  status: string;
+  createdAt: Date;
+}
+
+export interface TodoItemProps {
+  todo: TodoList;
+}

@@ -5,7 +5,8 @@ import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 import { Todo, Filter } from "src/types/todo";
 import StatusFilter from "../components/StatusFilter";
-import Sort from "../components/Sort";
+import TodoSort from "../components/TodoSort";
+import TodoItem from "../components/TodoItem";
 
 export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -71,22 +72,11 @@ export default function Todos() {
       </div>
       {/* ソート */}
       <div>
-        <Sort sort={sort} setSort={setSort}/>
+        <TodoSort sort={sort} setSort={setSort}/>
       </div>
+      {/* Todoの一覧 */}
       {sortedTodos.map((todo:Todo) => (
-        <div key={todo.id}>
-          <h3>タイトル</h3>
-          <p>{todo.title}</p>
-          <h3>内容</h3>
-          <p>{todo.content}</p>
-          <h3>ステータス</h3>
-          <p>{todo.status}</p>
-          <h3>作成日時</h3>
-          <p>{todo.createdAt.toLocaleString()}</p>
-          <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
-          {/* 仮の編集リンク */}
-          <p><Link href={`/todos/edit/${todo.id}`}>編集</Link></p>
-        </div>
+        <TodoItem key={todo.id} todo={todo}/>
       ))}
     </div>
   )
