@@ -12,13 +12,13 @@ import {
 } from "firebase/firestore";
 import { db } from "src/lib/firebase";
 
-//　型定義(後ほど別ファイルに移行する)
-// type Comment = {
-//   id: string;
-//   name: string;
-//   content: string;
-//   todoId: string;
-// }
+//型定義(後ほど別ファイルに移行する)
+type Comment = {
+  id: string;
+  name: string;
+  content: string;
+  todoId: string;
+}
 
 export default function Show() {
   const router = useRouter();
@@ -72,6 +72,33 @@ export default function Show() {
       <p>{todo.createdAt.toDate().toLocaleString()}</p>
       {/* コメント */}
       <h2>コメント</h2>
+      {/* コメントの一覧 */}
+      {comments.map((comment) => (
+        <li key={comment.id}>
+          <p>{comment.content}</p>
+          <p>{comment.name}</p>
+          <p>{comment.createdAt.toDate().toLocaleString()}</p>
+        </li>
+      ))}
+      {/* コメントのフォーム */}
+      <form onSubmit={handleCommitSubmit}>
+        <div>
+          <label htmlFor="name">名前</label>
+          <input
+            value={comment.name}
+            onChange={(e) => setComment({ ...comment, name: e.target.value})}
+            placeholder="名前"
+          />
+        </div>
+        <div>
+          <label htmlFor="content">コメント</label>
+          <textarea
+            value={comment.content}
+            onChange={(e) => setComment({ ...comment, content: e.target.value})}
+          />
+        </div>
+        <button type="submit">コメントを投稿する</button>
+      </form>
     </div>
   )
 }
