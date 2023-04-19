@@ -1,5 +1,5 @@
 import React, { SetStateAction } from "react";
-import { Filter } from "../types/todo";
+import { Filter } from "../../types/todo";
 
 type Props = {
   filter: string;

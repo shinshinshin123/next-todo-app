@@ -3,7 +3,7 @@ import Link from "next/link";
 import { db } from "src/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "@firebase/firestore";
 import { useState } from "react";
-import CreateFrom from "src/components/CreateFrom";
+import CreateFrom from "@/src/components/create/CreateFrom";
 
 export default function Create() {
   const [todoData, setTodoData] = useState({

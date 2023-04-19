@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
 import { Todo, Filter } from "src/types/todo";
-import StatusFilter from "../components/StatusFilter";
-import TodoSort from "../components/TodoSort";
-import TodoItem from "../components/TodoItem";
+import StatusFilter from "../components/todos/StatusFilter";
+import TodoSort from "../components/todos/TodoSort";
+import TodoItem from "../components/todos/TodoItem";
 
 export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);

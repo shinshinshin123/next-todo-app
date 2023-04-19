@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { TodoItemProps } from "../types/todo";
+import { TodoItemProps } from "../../types/todo";
 
 export default function TodoItem({ todo }: TodoItemProps) {
   return (

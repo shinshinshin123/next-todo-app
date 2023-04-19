@@ -43,7 +43,7 @@ export default function Show() {
     fetchTodo();
   }, [id])
 
-  // todoのidを取得するまでにLoding画面を出す。
+  // todoのidを取得するまでにLodingを画面を出す。
   if (!todo) {
     return <div>Loading...</div>
   }
