@@ -11,7 +11,6 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "src/lib/firebase";
-// import { uuidv4 } from "@firebase/util";
 
 //　型定義(後ほど別ファイルに移行する)
 // type Comment = {
@@ -30,30 +29,6 @@ export default function Show() {
     content: "",
   });
 
-  // // コメント投稿機能
-  // const handleCommentSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   const commentData = {
-  //     id: uuidv4(),
-  //     todoId: id,
-  //     name: comment.name,
-  //     content: comment.content,
-  //   };
-  //   try {
-  //     await addDoc(collection(db, "comments"), commentData);
-  //     setComment({
-  //       name: "",
-  //       content: "",
-  //     });
-  //     setTodo({
-  //       ...todo,
-  //       comments: [...(todo?.comment || []), commentData],
-  //     })
-  //   } catch(error) {
-  //     console.error(error)
-  //   }
-  // };
-
   //個別のtodo(id)をfirestoreのdbから持ってくる
   useEffect(() => {
     const fetchTodo = async () => {
@@ -68,6 +43,7 @@ export default function Show() {
     fetchTodo();
   }, [id])
 
+  // todoのidを取得するまでにLoding画面を出す。
   if (!todo) {
     return <div>Loading...</div>
   }
@@ -94,40 +70,8 @@ export default function Show() {
       <p>{todo.status}</p>
       <h2>作成日時</h2>
       <p>{todo.createdAt.toDate().toLocaleString()}</p>
-      {/* <h2>コメント</h2>
-      <div>
-        <ul>
-          {todo.comments && todo.comments.map((comment :any) => (
-            <li key={comment.id}>
-              <p>{comment.content}</p>
-              <p>{comment.name}</p>
-              <p>{comment.createdAt.toDate().toLocaleString()}</p>
-            </li>
-          ))}
-        </ul>
-      </div> */}
-      {/* <form onSubmit={handleCommentSubmit}>
-      <div>
-          <label htmlFor="name">名前</label>
-          <input
-            value={comment.name}
-            onChange={(e) => setComment({ ...comment, name: e.target.value})}
-            placeholder="名前"
-          />
-        </div>
-        <div>
-          <label htmlFor="content">コメント</label>
-          <textarea
-            value={comment.content}
-            onChange={(e) => setComment({ ...comment, content: e.target.value})}
-          />
-        </div>
-        <button type="submit">コメントを投稿する</button>
-      </form> */}
+      {/* コメント */}
+      <h2>コメント</h2>
     </div>
   )
 }
-function uuid4() {
-  throw new Error("Function not implemented.");
-}
-
