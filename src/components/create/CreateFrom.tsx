@@ -1,4 +1,4 @@
-import { CreateFormProps } from "../../types/todo"
+import { CreateFormProps } from "../../types/create"
 
 export default function CreateFrom({ todoData, handleInputChange, addTodo }: CreateFormProps) {
   return (
