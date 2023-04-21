@@ -1,12 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-  deleteDoc,
-  doc,
-  DocumentData,
-  getDoc,
-} from "firebase/firestore";
+import { doc, DocumentData, getDoc } from "firebase/firestore";
 import { db } from "src/lib/firebase";
 import TodoShow from "src/components/show/TodoShow";
 
@@ -34,18 +29,9 @@ export default function Show() {
     return <div>Loading...</div>
   }
 
-  // Todoの削除処理
-  const deleteTodo = async () => {
-    if (id) {
-      const todoRef = doc(db, "todos", id.toString());
-      await deleteDoc(todoRef);
-      router.push("/todos");
-    }
-  };
-
   return (
     <div>
-      <TodoShow todo={todo} handleDeleteTodo={deleteTodo}/>
+      <TodoShow todo={todo} />
     </div>
-  )
-}
+  );
+};

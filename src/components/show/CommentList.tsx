@@ -4,7 +4,7 @@ type CommentListProps = {
   comments: Comment[];
 };
 
-export default function CommentList({ comments }: CommentListProps) {
+export default function CommentList({ comments = [] }: CommentListProps) {
   return (
     <div>
       <h2>コメント一覧</h2>

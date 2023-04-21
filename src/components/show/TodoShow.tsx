@@ -2,9 +2,10 @@ import { DocumentData } from "@firebase/firestore";
 import Link from "next/link";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
+import TodoDelete from "./TodoDelete";
 
 type TodoShowProps = {
-  todo:DocumentData
+  todo:DocumentData;
   handleDeleteTodo: () => Promise<void>;
 }
 
@@ -12,7 +13,7 @@ export default function TodoShow({ todo, handleDeleteTodo }: TodoShowProps) {
   return (
     <div>
       <Link href="/todos/edit/${todo.id}">編集する</Link>
-      <button onClick={handleDeleteTodo}>削除する</button>
+      <TodoDelete  id={todo.id} handleDeleteTodo={handleDeleteTodo} />
       <Link href="/todos">戻る</Link>
       <h1>タイトル</h1>
       <p>{todo.title}</p>
