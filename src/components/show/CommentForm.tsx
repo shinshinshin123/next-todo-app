@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { doc, collection, addDoc } from "firebase/firestore";
-import { db } from "src/lib/firebase";
 import { Comment } from "src/types/Comment";
+import { db } from "src/lib/firebase";
 
 type CommentFormProps = {
   todoId: string;
@@ -27,13 +27,14 @@ export default function CommentForm({ todoId }: CommentFormProps) {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newComment: Comment = {
       name: comment.name,
       content: comment.content,
       createdAt: new Date(),
     };
+
     await addDoc(collection(doc(db, "todos", todoId), "comments"), newComment);
     setComment({
       name: "",
@@ -42,7 +43,7 @@ export default function CommentForm({ todoId }: CommentFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleCommentSubmit}>
       <h2>コメントを投稿する</h2>
       <div>
         <label htmlFor="name">名前</label>

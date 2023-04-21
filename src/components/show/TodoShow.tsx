@@ -8,7 +8,7 @@ type TodoShowProps = {
   handleDeleteTodo: () => Promise<void>;
 }
 
-export default function Todo({ todo, handleDeleteTodo }: TodoShowProps) {
+export default function TodoShow({ todo, handleDeleteTodo }: TodoShowProps) {
   return (
     <div>
       <Link href="/todos/edit/${todo.id}">編集する</Link>
