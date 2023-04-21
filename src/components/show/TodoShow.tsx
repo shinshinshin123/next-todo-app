@@ -1,5 +1,7 @@
 import { DocumentData } from "@firebase/firestore";
 import Link from "next/link";
+import CommentForm from "./CommentForm";
+import CommentList from "./CommentList";
 
 type TodoShowProps = {
   todo:DocumentData
@@ -20,6 +22,8 @@ export default function Todo({ todo, handleDeleteTodo }: TodoShowProps) {
       <p>{todo.status}</p>
       <h2>作成日時</h2>
       <p>{todo.createdAt.toDate().toLocaleString()}</p>
+      <CommentList comments={todo.comments} />
+      <CommentForm todoId={todo.id} />
     </div>
   )
 }

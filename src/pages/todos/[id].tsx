@@ -2,8 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
-  // addDoc,
-  // collection,
   deleteDoc,
   doc,
   DocumentData,
@@ -16,10 +14,6 @@ export default function Show() {
   const router = useRouter();
   const { id } = router.query;
   const [todo, setTodo] = useState<DocumentData & { comments?: Comment[]}| null>(null);
-  // const [comment, setComment] = useState({
-  //   name: "",
-  //   content: "",
-  // });
 
   //個別のtodo(id)をfirestoreのdbから持ってくる
   useEffect(() => {
