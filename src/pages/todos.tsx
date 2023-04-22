@@ -3,19 +3,10 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { collection, getDocs} from "@firebase/firestore";
 import { db } from "src/lib/firebase";
-
-//　後ほど型定義ファイルを作り分ける
-// todoのインターフェイス
-interface Todo {
-  id: string;
-  title: string;
-  content: string;
-  status: string;
-  createdAt: Date;
-}
-
-// フィルターの型定義
-type Filter = "all" |"completed" | "inProgress" | "inComplete";
+import { Todo, Filter } from "src/types/todo";
+import StatusFilter from "../components/todos/StatusFilter";
+import TodoSort from "../components/todos/TodoSort";
+import TodoItem from "../components/todos/TodoItem";
 
 export default function Todos() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -75,30 +66,17 @@ export default function Todos() {
       <div>
         <Link href="/todos/create">TODO作成</Link>
       </div>
+      {/* ステータスフィルター */}
       <div>
-        <button onClick={() => setFilter("completed")}>完了</button>
-        <button onClick={() => setFilter("inProgress")}>途中</button>
-        <button onClick={() => setFilter("inComplete")}>未完了</button>
-        <button onClick={() => setFilter("all")}>全て</button>
+        <StatusFilter filter={filter} setFilter={setFilter}/>
       </div>
-      <div>
-        <button onClick={() => setSort("asc")}>日付（昇順）</button>
-        <button onClick={() => setSort("desc")}>日付（降順）</button>
-      </div>
+      {/* ソート */}
+      {/* <div>
+        <TodoSort sort={sort} setSort={setSort}/>
+      </div> */}
+      {/* Todoの一覧 */}
       {sortedTodos.map((todo:Todo) => (
-        <div key={todo.id}>
-          <h3>タイトル</h3>
-          <p>{todo.title}</p>
-          <h3>内容</h3>
-          <p>{todo.content}</p>
-          <h3>ステータス</h3>
-          <p>{todo.status}</p>
-          <h3>作成日時</h3>
-          <p>{todo.createdAt.toLocaleString()}</p>
-          <p><Link href={`/todos/${todo.id}`}>詳細</Link></p>
-          {/* 仮の編集リンク */}
-          <p><Link href={`/todos/edit/${todo.id}`}>編集</Link></p>
-        </div>
+        <TodoItem key={todo.id} todo={todo}/>
       ))}
     </div>
   )
