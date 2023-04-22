@@ -31,7 +31,9 @@ export default function Show() {
 
   return (
     <div>
-      <TodoShow todo={todo} />
+      <TodoShow todo={todo} handleDeleteTodo={function (): Promise<void> {
+        throw new Error("Function not implemented.");
+      } }  />
     </div>
   );
 };

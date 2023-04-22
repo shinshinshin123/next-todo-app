@@ -1,9 +1,9 @@
 import React from "react";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"
 import { doc, getDoc, updateDoc} from "firebase/firestore";
 import { db } from "src/lib/firebase";
+import TodoEdit from "src/components/edit/TodoEdit";
 
 export default function Edit() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function Edit() {
     fetchTodo();
   }, [id]);
 
-  const editSubmit = async (e: any) => {
+  const handleEditSubmit = async (e: any) => {
     e.preventDefault();
     const todoRef = doc(db, "todos", id!.toString());
     try {
@@ -74,38 +74,12 @@ export default function Edit() {
   }
 
   return (
-    <div>
-      <h1>Edit Todo</h1>
-      <Link href="/todos">戻る</Link>
-      <form onSubmit={editSubmit}>
-        <div>
-          <label htmlFor="title">タイトル</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={todo.title}
-            onChange={handleTitleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="content">内容</label>
-          <textarea
-            id="content"
-            value={todo.content}
-            onChange={handleContentChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="status">ステータス</label>
-          <select id="status" value={todo.status} onChange={handleStatusChange}>
-            <option value="未完了">未完了</option>
-            <option value="途中">途中</option>
-            <option value="完了">完了</option>
-          </select>
-        </div>
-        <button type="submit">保存</button>
-      </form>
-    </div>
-  )
-}
+    <TodoEdit
+      handleTitleChange={handleTitleChange}
+      handleContentChange={handleContentChange}
+      handleStatusChange={handleStatusChange}
+      editSubmit={handleEditSubmit}
+      todo={todo}
+    />
+  );
+};

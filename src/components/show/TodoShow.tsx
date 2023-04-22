@@ -13,7 +13,7 @@ export default function TodoShow({ todo, handleDeleteTodo }: TodoShowProps) {
   return (
     <div>
       <Link href="/todos/edit/${todo.id}">編集する</Link>
-      <TodoDelete  id={todo.id} handleDeleteTodo={handleDeleteTodo} />
+      {/* <TodoDelete  id={todo.id} handleDeleteTodo={handleDeleteTodo} /> */}
       <Link href="/todos">戻る</Link>
       <h1>タイトル</h1>
       <p>{todo.title}</p>
@@ -23,8 +23,8 @@ export default function TodoShow({ todo, handleDeleteTodo }: TodoShowProps) {
       <p>{todo.status}</p>
       <h2>作成日時</h2>
       <p>{todo.createdAt.toDate().toLocaleString()}</p>
-      <CommentList comments={todo.comments} />
-      <CommentForm todoId={todo.id} />
+      {/* <CommentList comments={todo.comments} />
+      <CommentForm todoId={todo.id} /> */}
     </div>
   )
 }
