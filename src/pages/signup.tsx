@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { auth } from '../lib/firebase';
+import { auth, createUserWithEmailAndPassword,  updateProfile} from '../lib/firebase';
 
 export default function Signup () {
   const [formData, setFormData] = useState({
@@ -24,16 +24,19 @@ export default function Signup () {
   const handleSignup = async (e:any) => {
     e.preventDefault();
     setIsLoading(true);
-    // try {
-    //   const { email, password, userName } = formData;
-    //   const { user } = await auth.createUserWithEmailAndPassword(email, password);
-    //   await user.updateProfile({ userName });
-    //   router.push('/')
-    // } catch (error) {
-    //   console.error(error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      const { email, password, userName } = formData;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async(userCredential) => {
+          const user = userCredential.user;
+          await updateProfile(user, { displayName: userName });
+          router.push('/')
+        })
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
