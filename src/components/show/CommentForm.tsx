@@ -7,6 +7,8 @@ type CommentFormProps = {
   todoId: string;
 };
 
+console.log(db);
+
 export default function CommentForm({ todoId }: CommentFormProps) {
   const [comment, setComment] = useState({
     name: "",
@@ -34,7 +36,6 @@ export default function CommentForm({ todoId }: CommentFormProps) {
       content: comment.content,
       createdAt: new Date(),
     };
-
     await addDoc(collection(doc(db, "todos", todoId), "comments"), newComment);
     setComment({
       name: "",
